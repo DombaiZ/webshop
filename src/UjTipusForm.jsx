@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const API_BASE_URL = "https://localhost:5001/api";
 
@@ -16,7 +18,7 @@ const UjTipusForm = () => {
     setError(null);
 
     const ujTipus = { megnevezes, leiras, kepek };
-    
+
     try {
       await axios.post(`${API_BASE_URL}/UjTipusok`, ujTipus);
       alert("Új típus sikeresen hozzáadva!");
@@ -28,15 +30,49 @@ const UjTipusForm = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Új típus hozzáadása</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Megnevezés" value={megnevezes} onChange={e => setMegnevezes(e.target.value)} className="border p-2 mb-2 block w-full" required />
-        <textarea placeholder="Leírás" value={leiras} onChange={e => setLeiras(e.target.value)} className="border p-2 mb-2 block w-full" required />
-        <input type="text" placeholder="Kép URL (opcionális)" value={kepek} onChange={e => setKepek(e.target.value)} className="border p-2 mb-2 block w-full" />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">Mentés</button>
-      </form>
+    <div className="container mt-5 d-flex justify-content-center">
+      <div className="card shadow-lg p-4" style={{ maxWidth: "500px", width: "100%" }}>
+        <h2 className="text-center mb-4 text-primary">
+          <i className="bi bi-plus-circle me-2"></i>Új típus hozzáadása
+        </h2>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Megnevezés</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Megnevezés"
+              value={megnevezes}
+              onChange={(e) => setMegnevezes(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Leírás</label>
+            <textarea
+              className="form-control"
+              placeholder="Leírás"
+              value={leiras}
+              onChange={(e) => setLeiras(e.target.value)}
+              required
+            ></textarea>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Kép URL (opcionális)</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Kép URL"
+              value={kepek}
+              onChange={(e) => setKepek(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">
+            <i className="bi bi-check-circle me-2"></i>Mentés
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
